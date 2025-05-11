@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="dashboard.js"></script>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Student Classifieds</a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='post.html'">Post an Ad</button></li>
+        <li><button onclick="location.href='login.html'">Log In</button></li>
+        <li><button onclick="location.href='signup.html'">Sign Up</button></li>
+      </ul>
+    </nav>
+    <h1>Welcome to Your Dashboard</h1>
+    <p>Manage your ads, profile, and more!</p>
+  </header>
+
+  <main>
+    <section class="profile-overview">
+      <h2>Your Profile</h2>
+      <div class="profile-card">
+        <img id="profile-avatar" src="f.jpg" alt="Avatar" class="avatar" />
+        <h3 id="profile-name">John Doe</h3>
+        <p id="profile-course">Computer Engineering, Federal Polytechnic Oko</p>
+        <span class="badge verified" id="verified-badge">Verified Student</span>
+      </div>
+      <button class="primary-btn" onclick="location.href='edit-profile.html'">Edit Profile</button>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const user = JSON.parse(localStorage.getItem('user'));
+          if (user && user.avatar) {
+            document.getElementById('profile-avatar').src = user.avatar;
+          }
+        });
+      </script>
+    </section>
+
+    <section class="active-listings">
+      <h2>Your Active Listings</h2>
+      <div id="listing-grid" class="listing-grid">
+        <!-- Listings will be dynamically inserted here -->
+      </div>
+      <button class="primary-btn" onclick="location.href='post.html'">Post a New Ad</button>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post an Ad</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar">
+      <a href="index.html" class="logo">Student Classifieds</a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='dashboard.html'">My Dashboard</button></li>
+        <li><button onclick="location.href='login.html'">Log In</button></li>
+        <li><button onclick="location.href='signup.html'">Sign Up</button></li>
+      </ul>
+    </nav>
+    <h1>Post an Ad</h1>
+    <p>Share your items or opportunities with fellow students.</p>
+  </header>
+
+  <main class="post-form">
+    <form>
+      <input type="text" id="title" name="title" placeholder="Title" required />
+      <textarea id="description" name="description" placeholder="Description" required></textarea>
+      <input type="number" id="price" name="price" placeholder="Price" required />
+      <select id="category" name="category" required>
+        <option value="">Select Category</option>
+        <option value="textbooks">Textbooks</option>
+        <option value="electronics">Electronics</option>
+        <option value="accommodation">Accommodation</option>
+        <option value="jobs">Jobs</option>
+        <option value="furniture">Furniture</option>
+      </select>
+      <input type="file" id="image" name="image" accept="image/*" required />
+      <input type="text" id="location" name="location" placeholder="Location (optional)" />
+      <button class="primary-btn" type="submit">Submit Ad</button>
+    </form>
+  </main>
+</body>
+</html>

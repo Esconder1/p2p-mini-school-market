@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar">
+      <a href="index.html" class="logo">Student Classifieds</a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='signup.html'">Sign Up</button></li>
+        <li><button onclick="location.href='dashboard.html'">My Dashboard</button></li>
+      </ul>
+    </nav>
+    <h1>Login to Your Account</h1>
+  </header>
+
+  <main class="auth">
+    <form onsubmit="handleLogin(event)">
+      <input type="email" id="email" name="email" placeholder="Email" required />
+      <input type="password" id="password" name="password" placeholder="Password" required />
+      <button class="primary-btn" type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <button onclick="location.href='signup.html'">Sign Up</button></p>
+    <script>
+      function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Simulate login validation (replace with real backend logic)
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.email === email && user.password === password) {
+          alert('Login successful!');
+          window.location.href = 'index.html'; // Redirect to homepage
+        } else {
+          alert('Invalid email or password. Please try again.');
+        }
+      }
+    </script>
+  </main>
+</body>
+</html>

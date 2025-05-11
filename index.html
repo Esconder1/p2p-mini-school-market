@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Classifieds</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="theme-toggle.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <img src="cd.jpg" alt="Student Classifieds Logo" class="logo-image" />
+        Student Classifieds
+      </a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='post.html'">Post an Ad</button></li>
+        <li><button onclick="location.href='login.html'">Log In</button></li>
+        <li><button onclick="location.href='signup.html'">Sign Up</button></li>
+        <li><button onclick="location.href='dashboard.html'">My Dashboard</button></li>
+      </ul>
+    </nav>
+    <div class="theme-switch">
+      <label for="themeToggle" class="switch">
+        <input type="checkbox" id="themeToggle" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="hero-icon">
+      <img src="odin.jpg" alt="Marketplace Icon" />
+    </div>
+    <h1>Buy, Sell, and Connect — Just for Students.</h1>
+    <p>A vibrant peer-to-peer marketplace built exclusively for students. Discover textbooks, gadgets, gigs, and much more.</p>
+    <div class="cta-buttons">
+      <button class="primary-btn" onclick="location.href='dashboard.html'">Browse Listings</button>
+      <button class="secondary-btn" onclick="location.href='post.html'">Post an Ad</button>
+    </div>
+  </header>
+  <main>
+    <section class="categories">
+      <h2>Categories</h2>
+      <div class="category-list">
+        <div class="category-card">📘 Textbooks</div>
+        <div class="category-card">💻 Electronics</div>
+        <div class="category-card">🏠 Accommodation</div>
+        <div class="category-card">💼 Jobs</div>
+        <div class="category-card">🪑 Furniture</div>
+      </div>
+    </section>
+    <section class="search-filters">
+      <h2>Search & Filter</h2>
+      <div class="filters">
+        <input type="text" placeholder="Keyword Search" />
+        <select><option>Category</option></select>
+        <input type="text" placeholder="Location" />
+        <input type="range" min="0" max="1000" step="50" />
+      </div>
+    </section>
+    <section class="listings">
+      <h2>Featured Listings</h2>
+      <div class="listing-grid">
+        <div class="listing-card">
+          <img src="m.jpg" alt="Ad" />
+          <div class="listing-content">
+            <h3>MacBook Pro</h3>
+            <p>$850</p>
+            <span class="badge verified">Verified</span>
+            <small>Electronics</small>
+          </div>
+        </div>
+        <div class="listing-card">
+          <img src="p.jpg" alt="Ad" />
+          <div class="listing-content">
+            <h3>Used Textbook</h3>
+            <p>$20</p>
+            <span class="badge new">New</span>
+            <small>Textbooks</small>
+          </div>
+        </div>
+        <div class="listing-card">
+          <img src="q.jpg" alt="Ad" />
+          <div class="listing-content">
+            <h3>Desk & Chair Set</h3>
+            <p>$75</p>
+            <span class="badge sold">Sold</span>
+            <small>Furniture</small>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="theme-toggle.js"></script>
+
+  <script src="form-validation.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
