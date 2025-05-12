@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Listing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Student Classifieds</a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='dashboard.html'">Dashboard</button></li>
+      </ul>
+    </nav>
+    <h1>Listing Details</h1>
+  </header>
+
+  <main>
+    <div id="listing-details" class="listing-details">
+      <!-- Listing details will be dynamically inserted here -->
+    </div>
+    <button class="report-btn" onclick="reportListing()">Report Listing</button>
+    <section class="safety-tips">
+      <h2>Safety Tips</h2>
+      <ul>
+        <li>Meet in a public place for transactions.</li>
+        <li>Verify the item before making payment.</li>
+        <li>Beware of deals that seem too good to be true.</li>
+        <li>Never share sensitive personal information.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    const listing = JSON.parse(localStorage.getItem('viewListing'));
+
+    if (listing) {
+      const listingDetails = document.getElementById('listing-details');
+      listingDetails.innerHTML = `
+        <img src="${listing.image || 'placeholder.jpg'}" alt="Listing Image" />
+        <h2>${listing.title}</h2>
+        <p>${listing.description}</p>
+        <p><strong>Price:</strong> $${listing.price}</p>
+        <p><strong>Category:</strong> ${listing.category}</p>
+        <p><strong>Condition:</strong> ${listing.condition}</p>
+        <p><strong>Location:</strong> ${listing.location}</p>
+        <p><strong>Expires in:</strong> ${listing.expiry} days</p>
+      `;
+    } else {
+      alert('No listing found.');
+      window.location.href = 'dashboard.html';
+    }
+
+    function reportListing() {
+      alert('This listing has been reported. Our team will review it shortly.');
+      // Simulate reporting logic
+    }
+  </script>
+</body>
+</html>

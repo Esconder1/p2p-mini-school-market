@@ -14,6 +14,11 @@
         <img src="cd.jpg" alt="Student Classifieds Logo" class="logo-image" />
         Student Classifieds
       </a>
+      <div class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       <ul class="nav-buttons">
         <li><button onclick="location.href='index.html'">Home</button></li>
         <li><button onclick="location.href='post.html'">Post an Ad</button></li>
@@ -21,79 +26,147 @@
         <li><button onclick="location.href='signup.html'">Sign Up</button></li>
         <li><button onclick="location.href='dashboard.html'">My Dashboard</button></li>
       </ul>
+      <div class="theme-switch">
+        <label for="themeToggle" class="switch">
+          <input type="checkbox" id="themeToggle" />
+          <span class="slider round"></span>
+        </label>
+      </div>
     </nav>
-    <div class="theme-switch">
-      <label for="themeToggle" class="switch">
-        <input type="checkbox" id="themeToggle" />
-        <span class="slider round"></span>
-      </label>
-    </div>
-    <div class="hero-icon">
-      <img src="odin.jpg" alt="Marketplace Icon" />
-    </div>
-    <h1>Buy, Sell, and Connect — Just for Students.</h1>
-    <p>A vibrant peer-to-peer marketplace built exclusively for students. Discover textbooks, gadgets, gigs, and much more.</p>
-    <div class="cta-buttons">
-      <button class="primary-btn" onclick="location.href='dashboard.html'">Browse Listings</button>
-      <button class="secondary-btn" onclick="location.href='post.html'">Post an Ad</button>
+    <div class="hero-content">
+      <h1>Buy, Sell, and Connect — Just for Students.</h1>
+      <p>A vibrant peer-to-peer marketplace built exclusively for students. Discover textbooks, gadgets, gigs, and much more.</p>
+      <div class="cta-buttons">
+        <button class="primary-btn" onclick="location.href='dashboard.html'">Browse Listings</button>
+        <button class="secondary-btn" onclick="location.href='post.html'">Post an Ad</button>
+      </div>
     </div>
   </header>
-  <main>
-    <section class="categories">
-      <h2>Categories</h2>
-      <div class="category-list">
-        <div class="category-card">📘 Textbooks</div>
-        <div class="category-card">💻 Electronics</div>
-        <div class="category-card">🏠 Accommodation</div>
-        <div class="category-card">💼 Jobs</div>
-        <div class="category-card">🪑 Furniture</div>
-      </div>
-    </section>
-    <section class="search-filters">
-      <h2>Search & Filter</h2>
-      <div class="filters">
-        <input type="text" placeholder="Keyword Search" />
-        <select><option>Category</option></select>
-        <input type="text" placeholder="Location" />
-        <input type="range" min="0" max="1000" step="50" />
-      </div>
-    </section>
-    <section class="listings">
-      <h2>Featured Listings</h2>
-      <div class="listing-grid">
-        <div class="listing-card">
-          <img src="m.jpg" alt="Ad" />
-          <div class="listing-content">
-            <h3>MacBook Pro</h3>
-            <p>$850</p>
-            <span class="badge verified">Verified</span>
-            <small>Electronics</small>
-          </div>
-        </div>
-        <div class="listing-card">
-          <img src="p.jpg" alt="Ad" />
-          <div class="listing-content">
-            <h3>Used Textbook</h3>
-            <p>$20</p>
-            <span class="badge new">New</span>
-            <small>Textbooks</small>
-          </div>
-        </div>
-        <div class="listing-card">
-          <img src="q.jpg" alt="Ad" />
-          <div class="listing-content">
-            <h3>Desk & Chair Set</h3>
-            <p>$75</p>
-            <span class="badge sold">Sold</span>
-            <small>Furniture</small>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <script src="theme-toggle.js"></script>
 
-  <script src="form-validation.js"></script>
-  <script src="dashboard.js"></script>
+  <main>
+    <section class="listing-grid" id="listingGrid">
+      <!-- Listings will be dynamically inserted here -->
+    </section>
+
+    <script>
+      const listings = [
+        {
+          id: '1',
+          title: 'Laptop for Sale',
+          price: 500,
+          category: 'Electronics',
+          condition: 'Used',
+          location: 'Oko Main',
+          image: 'u.jpg',
+        },
+        {
+          id: '2',
+          title: 'Textbook: Advanced Mathematics',
+          price: 20,
+          category: 'Textbooks',
+          condition: 'New',
+          location: 'Extension',
+          image: 's.jpg',
+        },
+        {
+          id: '3',
+          title: 'Comfortable Hostel Bed',
+          price: 100,
+          category: 'Furniture',
+          condition: 'Used',
+          location: 'Hostel',
+          image: 'i.jpg',
+        },
+        {
+          id: '4',
+          title: 'Smartphone - Like New',
+          price: 300,
+          category: 'Electronics',
+          condition: 'Used',
+          location: 'Oko Main',
+          image: 'h.jpg',
+        },
+        {
+          id: '5',
+          title: 'Part-Time Tutoring Job',
+          price: 0,
+          category: 'Jobs',
+          condition: 'N/A',
+          location: 'Extension',
+          image: 'ab.jpg',
+        },
+      ];
+
+      function renderListings(listingsToRender) {
+        const listingGrid = document.getElementById('listingGrid');
+        listingGrid.innerHTML = '';
+
+        if (listingsToRender.length > 0) {
+          listingsToRender.forEach(listing => {
+            const listingCard = document.createElement('div');
+            listingCard.classList.add('listing-card');
+            listingCard.innerHTML = `
+              <img src="${listing.image}" alt="${listing.title}" />
+              <div class="listing-content">
+                <h3>${listing.title}</h3>
+                <p>$${listing.price}</p>
+                <small>${listing.category} - ${listing.condition}</small>
+                <p>${listing.location}</p>
+                <button class="secondary-btn" onclick="saveAdToFavorites('${listing.id}')">Save Ad</button>
+              </div>
+            `;
+            listingGrid.appendChild(listingCard);
+          });
+        } else {
+          listingGrid.innerHTML = '<p>No listings available.</p>';
+        }
+      }
+
+      // Save an ad to favorites
+      function saveAdToFavorites(adId) {
+        const ad = listings.find(listing => listing.id === adId);
+        if (ad) {
+          const savedAds = JSON.parse(localStorage.getItem('savedAds')) || [];
+          if (!savedAds.some(savedAd => savedAd.id === adId)) {
+            savedAds.push(ad);
+            localStorage.setItem('savedAds', JSON.stringify(savedAds));
+            alert('Ad saved to favorites!');
+          } else {
+            alert('This ad is already in your favorites.');
+          }
+        }
+      }
+
+      // Initial render
+      renderListings(listings);
+    </script>
+  </main>
+
+  <section class="blog-tips">
+    <h2>Blog & Tips</h2>
+    <div class="blog-grid">
+      <article class="blog-card">
+        <h3>Safety Tips for Buying and Selling</h3>
+        <p>Always meet in public places, verify items before payment, and avoid sharing sensitive information.</p>
+        <a href="#" class="read-more">Read More</a>
+      </article>
+      <article class="blog-card">
+        <h3>How to Write a Great Ad</h3>
+        <p>Use clear titles, detailed descriptions, and high-quality images to attract more buyers.</p>
+        <a href="#" class="read-more">Read More</a>
+      </article>
+      <article class="blog-card">
+        <h3>Upcoming School Events</h3>
+        <p>Stay updated on the latest events happening around your campus. Don't miss out!</p>
+        <a href="#" class="read-more">Read More</a>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Student Classifieds. All rights reserved.</p>
+  </footer>
+
+  <script src="theme-toggle.js"></script>
 </body>
 </html>

@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Profile</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="form-validation.js"></script>
 </head>
 <body>
   <header>
@@ -13,9 +12,7 @@
       <a href="index.html" class="logo">Student Classifieds</a>
       <ul class="nav-buttons">
         <li><button onclick="location.href='index.html'">Home</button></li>
-        <li><button onclick="location.href='dashboard.html'">My Dashboard</button></li>
-        <li><button onclick="location.href='login.html'">Log In</button></li>
-        <li><button onclick="location.href='signup.html'">Sign Up</button></li>
+        <li><button onclick="location.href='dashboard.html'">Dashboard</button></li>
       </ul>
     </nav>
     <h1>Edit Your Profile</h1>
@@ -26,58 +23,34 @@
       <label for="name">Name</label>
       <input type="text" id="name" name="name" placeholder="Full Name" required />
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Email" required />
+      <label for="bio">Bio</label>
+      <textarea id="bio" name="bio" placeholder="A short description about yourself"></textarea>
 
-      <label for="course">Course</label>
-      <input type="text" id="course" name="course" placeholder="Course" required />
+      <label for="contact">Contact Details</label>
+      <input type="email" id="contact" name="contact" placeholder="Email or Phone" required />
 
-      <label for="school">School</label>
-      <input type="text" id="school" name="school" placeholder="School" required />
-
-      <label for="avatar">Profile Picture</label>
-      <input type="file" id="avatar" name="avatar" accept="image/*" />
+      <label for="profilePic">Profile Picture</label>
+      <input type="file" id="profilePic" name="profilePic" accept="image/*" />
 
       <button type="submit" class="primary-btn">Save Changes</button>
     </form>
   </main>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        document.getElementById('name').value = user.name || '';
-        document.getElementById('email').value = user.email || '';
-        document.getElementById('course').value = user.course || '';
-        document.getElementById('school').value = user.school || '';
-      }
+    const user = JSON.parse(localStorage.getItem('user')) || {};
+    document.getElementById('name').value = user.name || '';
+    document.getElementById('bio').value = user.bio || '';
+    document.getElementById('contact').value = user.contact || '';
 
-      document.getElementById('editProfileForm').addEventListener('submit', (e) => {
-        e.preventDefault();
+    document.getElementById('editProfileForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const bio = document.getElementById('bio').value;
+      const contact = document.getElementById('contact').value;
 
-        const updatedUser = {
-          name: document.getElementById('name').value,
-          email: document.getElementById('email').value,
-          course: document.getElementById('course').value,
-          school: document.getElementById('school').value,
-        };
-
-        const avatarInput = document.getElementById('avatar');
-        if (avatarInput.files && avatarInput.files[0]) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            updatedUser.avatar = e.target.result;
-            localStorage.setItem('user', JSON.stringify(updatedUser));
-            alert('Profile updated successfully!');
-            window.location.href = 'dashboard.html'; // Redirect to dashboard
-          };
-          reader.readAsDataURL(avatarInput.files[0]);
-        } else {
-          localStorage.setItem('user', JSON.stringify(updatedUser));
-          alert('Profile updated successfully!');
-          window.location.href = 'dashboard.html'; // Redirect to dashboard
-        }
-      });
+      localStorage.setItem('user', JSON.stringify({ ...user, name, bio, contact }));
+      alert('Profile updated successfully!');
+      window.location.href = 'dashboard.html';
     });
   </script>
 </body>

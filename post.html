@@ -22,10 +22,17 @@
   </header>
 
   <main class="post-form">
-    <form>
+    <form id="postAdForm">
+      <label for="title">Title</label>
       <input type="text" id="title" name="title" placeholder="Title" required />
+      
+      <label for="description">Description</label>
       <textarea id="description" name="description" placeholder="Description" required></textarea>
+      
+      <label for="price">Price</label>
       <input type="number" id="price" name="price" placeholder="Price" required />
+      
+      <label for="category">Category</label>
       <select id="category" name="category" required>
         <option value="">Select Category</option>
         <option value="textbooks">Textbooks</option>
@@ -34,10 +41,129 @@
         <option value="jobs">Jobs</option>
         <option value="furniture">Furniture</option>
       </select>
+
+      <label for="condition">Condition</label>
+      <select id="condition" name="condition" required>
+        <option value="">Select Condition</option>
+        <option value="new">New</option>
+        <option value="used">Used</option>
+      </select>
+
+      <label for="expiry">Listing Expiry Duration</label>
+      <select id="expiry" name="expiry" required>
+        <option value="">Select Duration</option>
+        <option value="7">7 Days</option>
+        <option value="14">14 Days</option>
+        <option value="30">30 Days</option>
+      </select>
+
+      <label for="region">Region/Location</label>
+      <select id="region" name="region" required>
+        <option value="">Select Region</option>
+        <option value="Oko Main">Oko Main</option>
+        <option value="Extension">Extension</option>
+        <option value="Hostel">Hostel</option>
+        <option value="Other">Other</option>
+      </select>
+      
+      <label for="image">Image</label>
       <input type="file" id="image" name="image" accept="image/*" required />
+      
+      <label for="location">Location</label>
       <input type="text" id="location" name="location" placeholder="Location (optional)" />
+      
+      <fieldset>
+        <legend>Paid Options</legend>
+        <label>
+          <input type="checkbox" name="premium" id="premium" />
+          Premium Listing ($10)
+        </label>
+        <label>
+          <input type="checkbox" name="topAd" id="topAd" />
+          Top Ad ($5)
+        </label>
+        <label>
+          <input type="checkbox" name="bumpUp" id="bumpUp" />
+          Bump Up ($3)
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Boost Ad Options</legend>
+        <label>
+          <input type="checkbox" name="featured" id="featured" />
+          Featured Ad ($15)
+        </label>
+        <label>
+          <input type="checkbox" name="topOfList" id="topOfList" />
+          Top of List ($10)
+        </label>
+        <label>
+          <input type="checkbox" name="urgent" id="urgent" />
+          Urgent Tag ($5)
+        </label>
+      </fieldset>
+      
       <button class="primary-btn" type="submit">Submit Ad</button>
+      <button class="secondary-btn" type="button" onclick="proceedToPayment()">Proceed to Payment</button>
     </form>
   </main>
+  <script>
+    document.getElementById('postAdForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const price = document.getElementById('price').value;
+      const category = document.getElementById('category').value;
+      const condition = document.getElementById('condition').value;
+      const expiry = document.getElementById('expiry').value;
+      const region = document.getElementById('region').value;
+
+      if (!title || !description || !price || !category || !condition || !expiry || !region) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const newListing = {
+        id: Date.now().toString(),
+        title,
+        description,
+        price,
+        category,
+        condition,
+        expiry,
+        region,
+        image: document.getElementById('image').files[0]?.name || '',
+        location: document.getElementById('location').value || 'Not specified',
+      };
+
+      const listings = JSON.parse(localStorage.getItem('listings')) || [];
+      listings.push(newListing);
+      localStorage.setItem('listings', JSON.stringify(listings));
+
+      alert('Ad submitted successfully!');
+      window.location.href = 'dashboard.html';
+    });
+
+    function proceedToPayment() {
+      const featured = document.getElementById('featured').checked;
+      const topOfList = document.getElementById('topOfList').checked;
+      const urgent = document.getElementById('urgent').checked;
+
+      let totalCost = 0;
+      if (featured) totalCost += 15;
+      if (topOfList) totalCost += 10;
+      if (urgent) totalCost += 5;
+
+      if (totalCost > 0) {
+        alert(`Total cost for boosting your ad: $${totalCost}. Redirecting to payment...`);
+        // Simulate payment integration
+        window.location.href = `payment.html?amount=${totalCost}`;
+      } else {
+        alert('No boost options selected. Please select at least one option.');
+      }
+    }
+  </script>
 </body>
 </html>

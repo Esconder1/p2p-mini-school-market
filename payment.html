@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Student Classifieds</a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='dashboard.html'">Dashboard</button></li>
+      </ul>
+    </nav>
+    <h1>Complete Your Payment</h1>
+  </header>
+
+  <main>
+    <p id="payment-amount">Amount to Pay: $0</p>
+    <button class="primary-btn" onclick="payWithPaystack()">Pay with Paystack</button>
+    <button class="primary-btn" onclick="payWithFlutterwave()">Pay with Flutterwave</button>
+  </main>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const amount = urlParams.get('amount') || 0;
+    document.getElementById('payment-amount').textContent = `Amount to Pay: $${amount}`;
+
+    function payWithPaystack() {
+      alert(`Redirecting to Paystack for payment of $${amount}...`);
+      // Simulate Paystack integration
+    }
+
+    function payWithFlutterwave() {
+      alert(`Redirecting to Flutterwave for payment of $${amount}...`);
+      // Simulate Flutterwave integration
+    }
+  </script>
+</body>
+</html>

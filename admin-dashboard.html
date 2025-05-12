@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Student Classifieds</a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='login.html'">Log Out</button></li>
+      </ul>
+    </nav>
+    <h1>Admin Dashboard</h1>
+  </header>
+
+  <main>
+    <!-- Manage Users Section -->
+    <section class="admin-section">
+      <h2>Manage Users</h2>
+      <div id="user-list">
+        <!-- User data will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <!-- Manage Listings Section -->
+    <section class="admin-section">
+      <h2>Manage Listings</h2>
+      <div id="listing-list">
+        <!-- Listing data will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <!-- Manage Categories Section -->
+    <section class="admin-section">
+      <h2>Manage Categories</h2>
+      <form id="categoryForm">
+        <input type="text" id="newCategory" placeholder="Add New Category" required />
+        <button type="submit" class="primary-btn">Add Category</button>
+      </form>
+      <ul id="category-list">
+        <!-- Categories will be dynamically inserted here -->
+      </ul>
+    </section>
+
+    <!-- Reports & Stats Section -->
+    <section class="admin-section">
+      <h2>Reports & Stats</h2>
+      <p id="active-users">Active Users: 0</p>
+      <p id="total-listings">Total Listings: 0</p>
+    </section>
+
+    <!-- Flagged Content Section -->
+    <section class="admin-section">
+      <h2>Flagged Content</h2>
+      <div id="flagged-content">
+        <!-- Flagged content will be dynamically inserted here -->
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const listings = JSON.parse(localStorage.getItem('listings')) || [];
+    const categories = JSON.parse(localStorage.getItem('categories')) || ['Textbooks', 'Electronics', 'Accommodation', 'Jobs', 'Furniture'];
+    const flaggedContent = JSON.parse(localStorage.getItem('flaggedContent')) || [];
+
+    // Render Users
+    function renderUsers() {
+      const userList = document.getElementById('user-list');
+      userList.innerHTML = users.length
+        ? users.map(user => `
+          <div class="admin-item">
+            <p><strong>${user.name}</strong> (${user.email})</p>
+            <button class="secondary-btn" onclick="deleteUser('${user.email}')">Delete</button>
+          </div>
+        `).join('')
+        : '<p>No users found.</p>';
+    }
+
+    // Render Listings
+    function renderListings() {
+      const listingList = document.getElementById('listing-list');
+      listingList.innerHTML = listings.length
+        ? listings.map(listing => `
+          <div class="admin-item">
+            <p><strong>${listing.title}</strong> - $${listing.price}</p>
+            <button class="secondary-btn" onclick="approveListing('${listing.id}')">Approve</button>
+            <button class="secondary-btn" onclick="rejectListing('${listing.id}')">Reject</button>
+            <button class="secondary-btn" onclick="deleteListing('${listing.id}')">Delete</button>
+          </div>
+        `).join('')
+        : '<p>No listings found.</p>';
+    }
+
+    // Render Categories
+    function renderCategories() {
+      const categoryList = document.getElementById('category-list');
+      categoryList.innerHTML = categories.map(category => `
+        <li>
+          ${category}
+          <button class="secondary-btn" onclick="deleteCategory('${category}')">Delete</button>
+        </li>
+      `).join('');
+    }
+
+    // Render Flagged Content
+    function renderFlaggedContent() {
+      const flaggedContentDiv = document.getElementById('flagged-content');
+      flaggedContentDiv.innerHTML = flaggedContent.length
+        ? flaggedContent.map(content => `
+          <div class="admin-item">
+            <p><strong>${content.title}</strong> - Reported for: ${content.reason}</p>
+            <button class="secondary-btn" onclick="deleteFlaggedContent('${content.id}')">Delete</button>
+          </div>
+        `).join('')
+        : '<p>No flagged content found.</p>';
+    }
+
+    // Reports & Stats
+    function updateStats() {
+      document.getElementById('active-users').textContent = `Active Users: ${users.length}`;
+      document.getElementById('total-listings').textContent = `Total Listings: ${listings.length}`;
+    }
+
+    // Handlers
+    function deleteUser(email) {
+      const index = users.findIndex(user => user.email === email);
+      if (index !== -1) {
+        users.splice(index, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        renderUsers();
+        updateStats();
+      }
+    }
+
+    function approveListing(id) {
+      alert(`Listing ${id} approved.`);
+      // Add logic to mark the listing as approved
+    }
+
+    function rejectListing(id) {
+      alert(`Listing ${id} rejected.`);
+      // Add logic to mark the listing as rejected
+    }
+
+    function deleteListing(id) {
+      const index = listings.findIndex(listing => listing.id === id);
+      if (index !== -1) {
+        listings.splice(index, 1);
+        localStorage.setItem('listings', JSON.stringify(listings));
+        renderListings();
+        updateStats();
+      }
+    }
+
+    function deleteCategory(category) {
+      const index = categories.indexOf(category);
+      if (index !== -1) {
+        categories.splice(index, 1);
+        localStorage.setItem('categories', JSON.stringify(categories));
+        renderCategories();
+      }
+    }
+
+    function deleteFlaggedContent(id) {
+      const index = flaggedContent.findIndex(content => content.id === id);
+      if (index !== -1) {
+        flaggedContent.splice(index, 1);
+        localStorage.setItem('flaggedContent', JSON.stringify(flaggedContent));
+        renderFlaggedContent();
+      }
+    }
+
+    document.getElementById('categoryForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newCategory = document.getElementById('newCategory').value.trim();
+      if (newCategory && !categories.includes(newCategory)) {
+        categories.push(newCategory);
+        localStorage.setItem('categories', JSON.stringify(categories));
+        renderCategories();
+        document.getElementById('newCategory').value = '';
+      }
+    });
+
+    // Initial Render
+    renderUsers();
+    renderListings();
+    renderCategories();
+    renderFlaggedContent();
+    updateStats();
+  </script>
+</body>
+</html>

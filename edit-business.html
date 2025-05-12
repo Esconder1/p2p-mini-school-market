@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Business Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Student Classifieds</a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='dashboard.html'">Dashboard</button></li>
+      </ul>
+    </nav>
+    <h1>Edit Your Business Profile</h1>
+  </header>
+
+  <main>
+    <form id="editBusinessForm">
+      <label for="businessName">Business Name</label>
+      <input type="text" id="businessName" name="businessName" placeholder="Business Name" required />
+
+      <label for="businessDescription">Business Description</label>
+      <textarea id="businessDescription" name="businessDescription" placeholder="Describe your business and services" required></textarea>
+
+      <button type="submit" class="primary-btn">Save Changes</button>
+    </form>
+  </main>
+
+  <script>
+    const businessProfile = JSON.parse(localStorage.getItem('businessProfile')) || {
+      name: '',
+      description: '',
+    };
+
+    document.getElementById('businessName').value = businessProfile.name;
+    document.getElementById('businessDescription').value = businessProfile.description;
+
+    document.getElementById('editBusinessForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('businessName').value;
+      const description = document.getElementById('businessDescription').value;
+
+      localStorage.setItem('businessProfile', JSON.stringify({ name, description }));
+      alert('Business profile updated successfully!');
+      window.location.href = 'dashboard.html';
+    });
+  </script>
+</body>
+</html>

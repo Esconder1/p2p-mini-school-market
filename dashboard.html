@@ -28,19 +28,18 @@
       <div class="profile-card">
         <img id="profile-avatar" src="f.jpg" alt="Avatar" class="avatar" />
         <h3 id="profile-name">John Doe</h3>
-        <p id="profile-course">Computer Engineering, Federal Polytechnic Oko</p>
-        <span class="badge verified" id="verified-badge">Verified Student</span>
+        <p id="profile-bio">Bio: A short description about yourself.</p>
+        <p id="profile-contact">Contact: johndoe@example.com</p>
+        <span class="badge verified" id="verified-badge" style="display: none;">Verified Seller</span>
+        <button class="primary-btn" onclick="location.href='edit-profile.html'">Edit Profile</button>
       </div>
-      <button class="primary-btn" onclick="location.href='edit-profile.html'">Edit Profile</button>
-      <script>
-        document.addEventListener('DOMContentLoaded', () => {
-          const user = JSON.parse(localStorage.getItem('user'));
-          if (user && user.avatar) {
-            document.getElementById('profile-avatar').src = user.avatar;
-          }
-        });
-      </script>
     </section>
+    <script>
+      const user = JSON.parse(localStorage.getItem('user')) || {};
+      if (user.isVerified) {
+        document.getElementById('verified-badge').style.display = 'inline-block';
+      }
+    </script>
 
     <section class="active-listings">
       <h2>Your Active Listings</h2>
@@ -49,6 +48,235 @@
       </div>
       <button class="primary-btn" onclick="location.href='post.html'">Post a New Ad</button>
     </section>
+    <script>
+      const listings = JSON.parse(localStorage.getItem('listings')) || [];
+
+      function renderListings() {
+        const listingGrid = document.getElementById('listing-grid');
+        listingGrid.innerHTML = '';
+
+        if (listings.length > 0) {
+          listings.forEach(listing => {
+            const listingCard = document.createElement('div');
+            listingCard.classList.add('listing-card');
+
+            listingCard.innerHTML = `
+              <img src="${listing.image || 'placeholder.jpg'}" alt="Listing Image" />
+              <div class="listing-content">
+                <h3>${listing.title}</h3>
+                <p>$${listing.price}</p>
+                <small>${listing.category} - ${listing.condition}</small>
+                <p>Views: ${listing.views || 0}, Clicks: ${listing.clicks || 0}</p>
+                <div class="listing-actions">
+                  <button class="secondary-btn" onclick="boostAd('${listing.id}')">Boost Ad</button>
+                  <button class="secondary-btn" onclick="editListing('${listing.id}')">Edit</button>
+                  <button class="secondary-btn" onclick="deleteListing('${listing.id}')">Delete</button>
+                  <button class="secondary-btn" onclick="viewListing('${listing.id}')">View</button>
+                </div>
+              </div>
+            `;
+            listingGrid.appendChild(listingCard);
+          });
+        } else {
+          listingGrid.innerHTML = '<p>No active listings found. Start posting!</p>';
+        }
+      }
+
+      function deleteListing(id) {
+        const index = listings.findIndex(listing => listing.id === id);
+        if (index !== -1) {
+          listings.splice(index, 1);
+          localStorage.setItem('listings', JSON.stringify(listings));
+          renderListings();
+        }
+      }
+
+      function editListing(id) {
+        const listing = listings.find(listing => listing.id === id);
+        if (listing) {
+          localStorage.setItem('editListing', JSON.stringify(listing));
+          window.location.href = 'post.html';
+        }
+      }
+
+      function viewListing(id) {
+        const listing = listings.find(listing => listing.id === id);
+        if (listing) {
+          localStorage.setItem('viewListing', JSON.stringify(listing));
+          window.location.href = 'view-listing.html';
+        }
+      }
+
+      function boostAd(id) {
+        const listing = listings.find(listing => listing.id === id);
+        if (listing) {
+          alert(`Redirecting to boost options for "${listing.title}"`);
+          window.location.href = `post.html?boost=${id}`;
+        }
+      }
+
+      renderListings();
+    </script>
+
+    <section class="chat-with-sellers">
+      <h2>Chat with Sellers</h2>
+      <p>Connect directly with sellers to ask questions or negotiate deals.</p>
+      <button class="primary-btn" onclick="location.href='chat.html'">Open Chat</button>
+      <p id="newMessageNotification" style="color: red; display: none;">You have new messages!</p>
+    </section>
+    <script>
+      const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+      const lastReadMessageCount = parseInt(localStorage.getItem('lastReadMessageCount')) || 0;
+
+      if (messages.length > lastReadMessageCount) {
+        document.getElementById('newMessageNotification').style.display = 'block';
+      }
+
+      function markMessagesAsRead() {
+        localStorage.setItem('lastReadMessageCount', messages.length);
+        document.getElementById('newMessageNotification').style.display = 'none';
+      }
+
+      document.querySelector('.primary-btn').addEventListener('click', markMessagesAsRead);
+    </script>
+
+    <section class="ratings-reviews">
+      <h2>Ratings & Reviews</h2>
+      <p>Build trust by leaving reviews for sellers you've interacted with.</p>
+      <div class="review-list">
+        <div class="review-card">
+          <h3>John Doe</h3>
+          <p>⭐⭐⭐⭐⭐</p>
+          <p>Great seller! Very responsive and helpful.</p>
+        </div>
+        <div class="review-card">
+          <h3>Jane Smith</h3>
+          <p>⭐⭐⭐⭐</p>
+          <p>Good experience overall, but shipping was delayed.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="paid-promotions">
+      <h2>Manage Paid Promotions</h2>
+      <p>Boost your ads for more visibility with Premium Listings, Top Ads, and Bump Up options.</p>
+      <div class="promotion-options">
+        <button class="secondary-btn" onclick="promoteAd('premium')">Upgrade to Premium</button>
+        <button class="secondary-btn" onclick="promoteAd('topAd')">Set as Top Ad</button>
+        <button class="secondary-btn" onclick="promoteAd('bumpUp')">Bump Up</button>
+      </div>
+    </section>
+
+    <section class="business-profile">
+      <h2>Your Business Profile</h2>
+      <p>Showcase your services and gain visibility.</p>
+      <div class="business-card">
+        <h3 id="business-name">Your Business Name</h3>
+        <p id="business-description">Describe your business and services here.</p>
+        <button class="primary-btn" onclick="location.href='edit-business.html'">Edit Business Profile</button>
+      </div>
+    </section>
+
+    <section class="business-ads">
+      <h2>Your Ads</h2>
+      <div id="business-ads-grid" class="listing-grid">
+        <!-- Business ads will be dynamically inserted here -->
+      </div>
+      <button class="primary-btn" onclick="location.href='post.html'">Post a New Ad</button>
+    </section>
+
+    <section class="saved-ads">
+      <h2>Your Saved Ads</h2>
+      <div id="saved-ads-grid" class="listing-grid">
+        <!-- Saved ads will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <section class="notifications">
+      <h2>Notifications</h2>
+      <div id="notification-container">
+        <!-- Notifications will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <section class="analytics">
+      <h2>Analytics</h2>
+      <div id="analytics-container">
+        <!-- Analytics data will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <script>
+      function promoteAd(type) {
+        let cost = 0;
+        if (type === 'premium') cost = 10;
+        else if (type === 'topAd') cost = 5;
+        else if (type === 'bumpUp') cost = 3;
+
+        alert(`Ad promoted as ${type}. Cost: $${cost}`);
+        // Add logic to handle promotion
+      }
+
+      function reportListing(itemName) {
+        alert(`You have reported the listing: ${itemName}. Our team will review it shortly.`);
+        // Add logic to handle reporting
+      }
+
+      // Simulate fetching business profile data
+      const businessProfile = JSON.parse(localStorage.getItem('businessProfile')) || {
+        name: 'Your Business Name',
+        description: 'Describe your business and services here.',
+      };
+
+      document.getElementById('business-name').textContent = businessProfile.name;
+      document.getElementById('business-description').textContent = businessProfile.description;
+
+      // Simulate fetching business ads
+      const businessAds = JSON.parse(localStorage.getItem('businessAds')) || [];
+      const businessAdsGrid = document.getElementById('business-ads-grid');
+
+      if (businessAds.length > 0) {
+        businessAds.forEach(ad => {
+          const adCard = document.createElement('div');
+          adCard.classList.add('listing-card');
+          adCard.innerHTML = `
+            <img src="${ad.image}" alt="Ad Image" />
+            <div class="listing-content">
+              <h3>${ad.title}</h3>
+              <p>$${ad.price}</p>
+              <small>${ad.category}</small>
+            </div>
+          `;
+          businessAdsGrid.appendChild(adCard);
+        });
+      } else {
+        businessAdsGrid.innerHTML = '<p>No ads found. Start posting!</p>';
+      }
+
+      // Simulate fetching ad views data
+      const adViews = JSON.parse(localStorage.getItem('adViews')) || { 'Example Listing': 0 };
+
+      // Update views for each listing
+      Object.keys(adViews).forEach(adTitle => {
+        const viewsElement = document.getElementById(`views-${adTitle.replace(/\s+/g, '-').toLowerCase()}`);
+        if (viewsElement) {
+          viewsElement.textContent = adViews[adTitle];
+        }
+      });
+
+      // Simulate incrementing views (for demonstration purposes)
+      function incrementViews(adTitle) {
+        adViews[adTitle] = (adViews[adTitle] || 0) + 1;
+        localStorage.setItem('adViews', JSON.stringify(adViews));
+        const viewsElement = document.getElementById(`views-${adTitle.replace(/\s+/g, '-').toLowerCase()}`);
+        if (viewsElement) {
+          viewsElement.textContent = adViews[adTitle];
+        }
+      }
+
+      // Example: Increment views for "Example Listing"
+      incrementViews('Example Listing');
+    </script>
   </main>
 </body>
 </html>

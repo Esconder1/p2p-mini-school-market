@@ -32,8 +32,56 @@
       <label for="password">Password</label>
       <input type="password" id="password" name="password" placeholder="Password (min 6 characters)" required />
 
+      <label for="isSeller">
+        <input type="checkbox" id="isSeller" name="isSeller" />
+        I want to create a seller account
+      </label>
+
+      <label for="isBusiness">
+        <input type="checkbox" id="isBusiness" name="isBusiness" />
+        I want to create an official business profile
+      </label>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
+
+      <label for="profilePic">Profile Picture</label>
+      <input type="file" id="profilePic" name="profilePic" accept="image/*" />
+
+      <label for="verificationCode">Verification Code</label>
+      <input type="text" id="verificationCode" name="verificationCode" placeholder="Enter verification code" required />
+
+      <button type="button" class="secondary-btn" onclick="sendVerificationCode()">Send Verification Code</button>
       <button type="submit" class="primary-btn">Sign Up</button>
     </form>
+    <button class="google-login-btn" onclick="googleLogin()">Sign Up with Google</button>
   </main>
+  <script>
+    function sendVerificationCode() {
+      const phone = document.getElementById('phone').value;
+      if (!phone) {
+        alert('Please enter your phone number.');
+        return;
+      }
+      alert(`Verification code sent to ${phone}.`);
+      // Simulate sending verification code
+    }
+
+    function googleLogin() {
+      alert('Redirecting to Google login...');
+      // Simulate Google login
+    }
+
+    document.getElementById('signupForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const verificationCode = document.getElementById('verificationCode').value;
+      if (verificationCode !== '1234') { // Simulated verification code
+        alert('Invalid verification code.');
+        return;
+      }
+      alert('Signup successful and verified!');
+      // Proceed with signup logic
+    });
+  </script>
 </body>
 </html>

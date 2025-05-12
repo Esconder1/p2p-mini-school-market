@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Student Classifieds</a>
+      <ul class="nav-buttons">
+        <li><button onclick="location.href='index.html'">Home</button></li>
+        <li><button onclick="location.href='dashboard.html'">Dashboard</button></li>
+      </ul>
+    </nav>
+    <h1>Chat with Sellers</h1>
+  </header>
+
+  <main class="chat-section">
+    <div class="chat-window">
+      <div id="chatMessages" class="chat-messages">
+        <!-- Messages will be dynamically inserted here -->
+      </div>
+      <form id="chatForm">
+        <input type="text" id="chatInput" placeholder="Type your message..." required />
+        <button type="submit" class="primary-btn">Send</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+
+    // Simulate fetching message history
+    const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+
+    function renderMessages() {
+      chatMessages.innerHTML = '';
+      messages.forEach(msg => {
+        const messageElement = document.createElement('p');
+        messageElement.innerHTML = `<strong>${msg.sender}:</strong> ${msg.text}`;
+        chatMessages.appendChild(messageElement);
+      });
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (message) {
+        messages.push({ sender: 'You', text: message });
+        localStorage.setItem('chatMessages', JSON.stringify(messages));
+        renderMessages();
+        chatInput.value = '';
+        // Simulate receiving a reply
+        setTimeout(() => {
+          messages.push({ sender: 'Seller', text: 'Thank you for your message!' });
+          localStorage.setItem('chatMessages', JSON.stringify(messages));
+          renderMessages();
+        }, 1000);
+      }
+    });
+
+    // Initial render
+    renderMessages();
+  </script>
+</body>
+</html>

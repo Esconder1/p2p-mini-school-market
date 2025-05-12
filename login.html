@@ -24,7 +24,9 @@
       <input type="email" id="email" name="email" placeholder="Email" required />
       <input type="password" id="password" name="password" placeholder="Password" required />
       <button class="primary-btn" type="submit">Login</button>
+      <p><button type="button" onclick="resetPassword()">Forgot Password?</button></p>
     </form>
+    <button class="google-login-btn" onclick="googleLogin()">Login with Google</button>
     <p>Don't have an account? <button onclick="location.href='signup.html'">Sign Up</button></p>
     <script>
       function handleLogin(event) {
@@ -40,6 +42,19 @@
         } else {
           alert('Invalid email or password. Please try again.');
         }
+      }
+
+      function resetPassword() {
+        const email = prompt('Enter your email to reset your password:');
+        if (email) {
+          alert(`Password reset link sent to ${email}.`);
+          // Simulate sending password reset email
+        }
+      }
+
+      function googleLogin() {
+        alert('Redirecting to Google login...');
+        // Simulate Google login
       }
     </script>
   </main>
