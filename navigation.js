@@ -1,22 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
   const navBar = `
     <nav class="navbar">
-      <a href="index.html" class="logo">
-        <img src="cd.jpg" alt="Student Classifieds Logo" class="logo-image" />
-        Student Classifieds
-      </a>
-      <div class="hamburger">
-        <div></div>
-        <div></div>
-        <div></div>
+      <div class="nav-container">
+        <a href="index.html" class="brand">OkoMarket</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="ads.html">Browse Ads</a></li>
+          <li><a href="post.html">Post Ad</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="signup.html">Sign Up</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+        <div class="search-bar">
+          <input type="text" placeholder="Search ads..." />
+          <button>Search</button>
+        </div>
       </div>
-      <ul class="nav-buttons">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="post.html">Post an Ad</a></li>
-        <li><a href="login.html">Log In</a></li>
-        <li><a href="signup.html">Sign Up</a></li>
-        <li><a href="dashboard.html">My Dashboard</a></li>
-      </ul>
     </nav>
   `;
 

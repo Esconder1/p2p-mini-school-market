@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Ads</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="navigation.js"></script>
+</head>
+<body>
+  <!-- Navigation Bar will be dynamically injected by navigation.js -->
+
+  <header class="hero">
+    <h1>Browse Ads</h1>
+    <p>Find the best deals and opportunities posted by students.</p>
+  </header>
+
+  <main>
+    <section class="listing-grid" id="adsGrid">
+      <!-- Ads will be dynamically inserted here -->
+    </section>
+  </main>
+
+  <script>
+    // Fetch ads from localStorage or use a default set of ads
+    const ads = JSON.parse(localStorage.getItem('listings')) || [
+      {
+        id: '1',
+        title: 'Laptop for Sale',
+        price: 500,
+        category: 'Electronics',
+        condition: 'Used',
+        location: 'Oko Main',
+        image: 'u.jpg',
+      },
+      {
+        id: '2',
+        title: 'Textbook: Advanced Mathematics',
+        price: 20,
+        category: 'Textbooks',
+        condition: 'New',
+        location: 'Extension',
+        image: 's.jpg',
+      },
+      {
+        id: '3',
+        title: 'Comfortable Hostel Bed',
+        price: 100,
+        category: 'Furniture',
+        condition: 'Used',
+        location: 'Hostel',
+        image: 'i.jpg',
+      },
+      {
+        id: '4',
+        title: 'Smartphone - Like New',
+        price: 300,
+        category: 'Electronics',
+        condition: 'Used',
+        location: 'Oko Main',
+        image: 'h.jpg',
+      },
+      {
+        id: '5',
+        title: 'Part-Time Tutoring Job',
+        price: 0,
+        category: 'Jobs',
+        condition: 'N/A',
+        location: 'Extension',
+        image: 'ab.jpg',
+      },
+    ];
+
+    // Render ads dynamically
+    function renderAds(adsToRender) {
+      const adsGrid = document.getElementById('adsGrid');
+      adsGrid.innerHTML = '';
+
+      if (adsToRender.length > 0) {
+        adsToRender.forEach(ad => {
+          const adCard = document.createElement('div');
+          adCard.classList.add('listing-card');
+          adCard.innerHTML = `
+            <img src="${ad.image}" alt="${ad.title}" />
+            <div class="listing-content">
+              <h3>${ad.title}</h3>
+              <p>$${ad.price}</p>
+              <small>${ad.category} - ${ad.condition}</small>
+              <p>${ad.location}</p>
+              <button class="secondary-btn" onclick="saveAdToFavorites('${ad.id}')">Save Ad</button>
+            </div>
+          `;
+          adsGrid.appendChild(adCard);
+        });
+      } else {
+        adsGrid.innerHTML = '<p>No ads found. Try adjusting your search.</p>';
+      }
+    }
+
+    // Filter ads based on search input
+    function filterAds() {
+      const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      const filteredAds = ads.filter(ad =>
+        ad.title.toLowerCase().includes(searchInput) ||
+        ad.category.toLowerCase().includes(searchInput) ||
+        ad.location.toLowerCase().includes(searchInput)
+      );
+      renderAds(filteredAds);
+    }
+
+    // Save an ad to favorites
+    function saveAdToFavorites(adId) {
+      const ad = ads.find(ad => ad.id === adId);
+      if (ad) {
+        const savedAds = JSON.parse(localStorage.getItem('savedAds')) || [];
+        if (!savedAds.some(savedAd => savedAd.id === adId)) {
+          savedAds.push(ad);
+          localStorage.setItem('savedAds', JSON.stringify(savedAds));
+          alert('Ad saved to favorites!');
+        } else {
+          alert('This ad is already in your favorites.');
+        }
+      }
+    }
+
+    // Initial render
+    renderAds(ads);
+  </script>
+</body>
+</html>
