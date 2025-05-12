@@ -79,24 +79,92 @@ h1 {
 }
 
 /* Navbar */
-.navbar {
+.nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background: var(--primary);
-  color: white;
-  position: relative;
   flex-wrap: wrap;
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure nav-links are always visible */
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: auto;
+  margin-top: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  width: auto;
+  margin-top: 0;
+}
+
+.search-bar input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-bar button {
+  padding: 8px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #218838;
+}
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar .logo-image {
+  width: 40px;
+  height: 40px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
 }
 
 .nav-buttons {
   display: none;
   flex-direction: column;
-  gap: 0.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: 1rem;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--primary);
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .nav-buttons.active {
@@ -104,40 +172,21 @@ h1 {
 }
 
 .nav-buttons li {
-  display: inline-block;
+  list-style: none;
 }
 
-.nav-buttons button {
-  background: white;
-  color: var(--primary);
-  border: none;
+.nav-buttons a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-.nav-buttons button:hover {
-  background: var(--primary);
-  color: white;
-  border: 1px solid white;
-}
-
-/* Hamburger Menu */
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.hamburger div {
-  width: 25px;
-  height: 3px;
+.nav-buttons a:hover {
   background: white;
-  border-radius: 2px;
-  margin: 4px 0;
+  color: var(--primary);
 }
 
 /* Dropdown Menu */
@@ -783,31 +832,34 @@ footer {
     display: flex;
   }
 
-  .hamburger {
-    display: flex;
-  }
-
-  .nav-buttons {
+  .nav-links {
     flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .nav-buttons button {
+    align-items: flex-start; /* Align buttons to the left */
+    gap: 10px;
     width: 100%;
-    text-align: center;
-    background: white;
-    color: var(--primary);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s ease, color 0.3s ease;
+    margin-top: 10px;
   }
 
-  .nav-buttons button:hover {
-    background: var(--primary);
-    color: white;
+  .nav-links a {
+    width: 100%; /* Make buttons span the full width */
+    text-align: left; /* Align text to the left */
+    padding: 10px 15px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: flex-start; /* Align search bar to the left */
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .search-bar input {
+    width: 100%; /* Make input span the full width */
+  }
+
+  .search-bar button {
+    width: 100%; /* Make button span the full width */
   }
 
   form {
@@ -837,13 +889,33 @@ footer {
 }
 
 @media (min-width: 768px) {
-  .nav-buttons {
-    flex-direction: row;
+  .nav-links {
     display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: auto;
+    margin-top: 0;
   }
 
-  .hamburger {
-    display: none;
+  .search-bar {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: auto;
+    margin-top: 0;
+  }
+
+  .nav-buttons {
+    display: flex;
+    flex-direction: row;
+    position: static;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .nav-buttons a {
+    padding: 0.5rem 1rem;
   }
 
   .hero-content h1 {
