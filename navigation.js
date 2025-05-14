@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="nav-container">
         <a href="index.html" class="brand">OkoMarket</a>
         <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="ads.html">Browse Ads</a></li>
-          <li><a href="post.html">Post Ad</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="signup.html">Sign Up</a></li>
-          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="index.html" class="${window.location.pathname.includes('index.html') ? 'active' : ''}">Home</a></li>
+          <li><a href="ads.html" class="${window.location.pathname.includes('ads.html') ? 'active' : ''}">Browse Ads</a></li>
+          <li><a href="post.html" class="${window.location.pathname.includes('post.html') ? 'active' : ''}">Post Ad</a></li>
+          <li><a href="login.html" class="${window.location.pathname.includes('login.html') ? 'active' : ''}">Login</a></li>
+          <li><a href="signup.html" class="${window.location.pathname.includes('signup.html') ? 'active' : ''}">Sign Up</a></li>
+          <li><a href="dashboard.html" class="${window.location.pathname.includes('dashboard.html') ? 'active' : ''}">Dashboard</a></li>
         </ul>
         <div class="search-bar">
           <input type="text" placeholder="Search ads..." />
@@ -33,20 +33,5 @@ document.addEventListener('DOMContentLoaded', () => {
   hamburger.addEventListener('click', () => {
     navButtons.classList.toggle('active');
     hamburger.classList.toggle('open');
-  });
-
-  const toggle = document.getElementById('themeToggle');
-
-  // Theme toggle
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    toggle.checked = savedTheme === 'dark';
-  }
-
-  toggle.addEventListener('change', () => {
-    const theme = toggle.checked ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
   });
 });
