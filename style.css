@@ -1,6 +1,6 @@
 /* Variables */
 :root {
-  --bg-color: #f3f4f6;
+  --bg-color: hsl(125, 33%, 62%);
   --text-color: #1a1a1a;
   --card-bg: #ffffff;
   --primary: #007bff; /* Blue */
@@ -84,7 +84,7 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
-/* Header Slideshow */
+/* Hero Section */
 .hero {
   position: relative;
   overflow: hidden;
@@ -92,11 +92,9 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black; /* Neutral text color */
   text-align: center;
+  color: inherit; /* Remove specific text color */
   background: none; /* Remove background color */
-  border-radius: 10px;
-  margin-bottom: 2rem;
 }
 
 .hero::before {
@@ -108,7 +106,7 @@ h1 {
   height: 100%;
   background-size: cover;
   background-position: center;
-  animation: slideshow 12s infinite;
+  animation: slideshow 20s infinite ease-in-out; /* Smooth transitions */
   z-index: -1;
 }
 
@@ -116,14 +114,75 @@ h1 {
   0% {
     background-image: url('u.jpg');
   }
-  33% {
+   16.67% {
     background-image: url('s.jpg');
   }
-  66% {
+  33.33% {
     background-image: url('i.jpg');
   }
+  50% {
+    background-image: url('h.jpg');
+  }
+  66.67% {
+    background-image: url('ab.jpg');
+  }
+  83.33% {
+    background-image: url('x.jpg');
+  }
   100% {
-    background-image: url('u.jpg');
+    background-image: url('l.jpg');
+  }
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.cta-buttons button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #007bff, #28a745, #ff4d4d);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-buttons button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 400%;
+  height: 100%;
+  background: linear-gradient(90deg, #007bff, #28a745, #ff4d4d, #007bff);
+  animation: moveGradient 3s linear infinite;
+  z-index: -1;
+}
+
+.cta-buttons button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes moveGradient {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
@@ -484,65 +543,6 @@ button:active {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Hero Section */
-.hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  line-height: 1.2;
-}
-
-.hero-content p {
-  font-size: 1.3rem;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-}
-
-/* Moving Gradient Effect for Buttons */
-.cta-buttons button {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(90deg, #007bff, #28a745);
-  color: white;
-  border: none;
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cta-buttons button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-  z-index: -1;
-  transition: transform 0.3s ease;
-}
-
-.cta-buttons button:hover::before {
-  left: 0;
-  animation: moveGradient 2s linear infinite;
-}
-
-.cta-buttons button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes moveGradient {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
 /* Listing Grid */
 .listing-grid {
   display: grid;
@@ -596,6 +596,14 @@ button:active {
   margin-bottom: 1rem;
 }
 
+/* Main Section */
+main.container {
+  background: linear-gradient(135deg, #0056b3, #1e7e34); /* Darker Blue to Darker Green Gradient */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Blog Section */
 .blog-tips {
   background: var(--gradient);
@@ -630,7 +638,7 @@ button:active {
 
 .blog-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgba(150, 37, 37, 0.658);
 }
 
 .blog-card h3 {

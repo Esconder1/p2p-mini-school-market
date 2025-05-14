@@ -85,7 +85,6 @@
           listingsToRender.forEach(listing => {
             const listingCard = document.createElement('div');
             listingCard.classList.add('listing-card');
-            listingCard.style.animation = 'scaleUp 0.5s ease-in-out'; // Apply animation
             listingCard.innerHTML = `
               <img src="${listing.image}" alt="${listing.title}" />
               <div class="listing-content">
